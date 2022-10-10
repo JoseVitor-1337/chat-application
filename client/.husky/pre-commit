@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Verificando todo o código estabelecido antes do commit"
+
+yarn check-all || 
+( 
+  echo "Calma lá, foi encontrado um erro, revisa o código do commit e volta depois."
+)
+
+echo "Você venceu... esta vez. Estou comitando agora."
