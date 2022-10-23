@@ -20,7 +20,7 @@ const io = new Server(httpServer, {
   },
 });
 
-app.get("/", (request, response) => {
+app.get("/", () => {
   logger.info("Server is running");
 });
 

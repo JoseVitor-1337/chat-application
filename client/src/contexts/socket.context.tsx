@@ -9,12 +9,28 @@ import io, { Socket } from 'socket.io-client'
 import { Center, Spinner } from '@chakra-ui/react'
 
 import { SOCKET_URL } from 'configs/socket'
+import EVENTS from 'configs/events'
+
+type IMessage = {
+  userName: string
+  message: string
+  time: string
+}
+
+type IRooms = {
+  id: number
+  roomId: string
+  name: string
+}
 
 interface ContextProps {
   socket: Socket
   userName?: string
-  roomId?: string
-  rooms: string[]
+  roomId?: number
+  messages: IMessage[]
+  rooms: IRooms[]
+  onSetRoomId: (newRoomId: number) => void
+  onSetMessages: (messages: IMessage[]) => void
   onSetUserName: (name: string) => void
 }
 
@@ -22,7 +38,10 @@ const socket = io(SOCKET_URL)
 
 const SocketContext = createContext<ContextProps>({
   socket,
+  messages: [],
   rooms: [],
+  onSetRoomId: () => null,
+  onSetMessages: () => null,
   onSetUserName: () => null,
 })
 
@@ -32,21 +51,53 @@ type ISocketsProviderProps = {
 
 function SocketsProvider({ children }: ISocketsProviderProps) {
   const [userName, setUserName] = useState('')
-  const [roomId, setRoomId] = useState('')
-  const [rooms, setRooms] = useState<string[]>([])
+  const [roomId, setRoomId] = useState(0)
+  const [rooms, setRooms] = useState<IRooms[]>([])
   const [loading, setLoading] = useState(true)
+  const [messages, setMessages] = useState<IMessage[]>([])
 
   function onSetUserName(name: string) {
     setUserName(name)
   }
 
+  function onSetRoomId(newRoomId: number) {
+    setRoomId(newRoomId)
+  }
+
+  function onSetMessages(newMessages: IMessage[]) {
+    setMessages(newMessages)
+  }
+
+  useEffect(() => {
+    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms) => {
+      setRooms(newRooms)
+    })
+
+    socket.on(EVENTS.SERVER.DELETE_ROOM, (newRooms) => {
+      console.log('EVENTS.SERVER.DELETE_ROOM', newRooms)
+      setRooms(newRooms)
+    })
+
+    socket.on(EVENTS.SERVER.ROOM_MESSAGE, (allMessages: IMessage[]) => {
+      setMessages(allMessages)
+    })
+
+    socket.on(EVENTS.SERVER.JOINED_ROOMS, ({ roomId, messages }) => {
+      setRoomId(roomId)
+      setMessages(messages)
+    })
+  }, [socket])
+
   useEffect(() => {
     const userName = localStorage.getItem('username')
 
-    if (userName) setUserName(userName)
+    if (userName) {
+      socket.emit(EVENTS.CLIENT.USER_LOGGED, userName)
+      setUserName(userName)
+    }
 
     setLoading(false)
-  }, [])
+  }, [userName])
 
   if (loading) {
     return (
@@ -58,7 +109,16 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
 
   return (
     <SocketContext.Provider
-      value={{ socket, userName, roomId, rooms, onSetUserName }}
+      value={{
+        socket,
+        messages,
+        userName,
+        roomId,
+        rooms,
+        onSetRoomId,
+        onSetMessages,
+        onSetUserName,
+      }}
     >
       {children}
     </SocketContext.Provider>

@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+}
+
+model Room {
+  id      Int       @id @default(autoincrement())
+  roomId  String    @unique
+  name    String    @unique
+  messages Message[]
+}
+
+model Message {
+  id      Int    @id @default(autoincrement())
+  message String
+  userName String
+  time    String
+  room    Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId  Int
+}

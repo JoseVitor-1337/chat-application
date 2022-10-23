@@ -11,7 +11,12 @@ export default function Home() {
   if (!userName) return <Login />
 
   return (
-    <Grid templateColumns={{ base: 'none', md: '50% 50%', lg: '30% 70%' }}>
+    <Grid
+      height="100vh"
+      width="100vw"
+      templateColumns={{ base: 'none', md: '50% 50%', lg: '25% 75%' }}
+      overflow="hidden"
+    >
       <RoomsContainer />
       <MessagesContainer />
     </Grid>
