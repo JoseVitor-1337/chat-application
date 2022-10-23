@@ -63,6 +63,7 @@ function MessagesContainer() {
       justify="space-between"
     >
       <Box
+        bg={useColorModeValue('gray.100', 'gray.800')}
         width="100%"
         p={4}
         height="calc(100vh - 60px)"

@@ -39,6 +39,7 @@ function socket({ io }: { io: Server }) {
           }
 
           prismaClient.room.findMany().then((rooms) => {
+            console.log("rooms", rooms);
             socket.emit(EVENTS.SERVER.NEW_ROOM, rooms);
           });
         });
@@ -48,6 +49,7 @@ function socket({ io }: { io: Server }) {
       prismaClient.room.delete({ where: { id: roomId } }).then(() => {
         prismaClient.room.findMany().then((rooms) => {
           socket.broadcast.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
+          socket.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
         });
       });
     });
