@@ -7,6 +7,7 @@ import {
 } from 'react'
 import io, { Socket } from 'socket.io-client'
 import { Center, Spinner } from '@chakra-ui/react'
+import api from 'configs/api'
 
 import { SOCKET_URL } from 'configs/socket'
 import EVENTS from 'configs/events'
@@ -69,12 +70,24 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
   }
 
   useEffect(() => {
+    async function loadAsyncFunction() {
+      try {
+        const response = await api.get('/rooms')
+
+        setRooms(response.data.body?.rooms)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
+    loadAsyncFunction()
+  }, [])
+
+  useEffect(() => {
     socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms) => {
       setRooms(newRooms)
     })
 
     socket.on(EVENTS.SERVER.DELETE_ROOM, (newRooms) => {
-      console.log('EVENTS.SERVER.DELETE_ROOM', newRooms)
       setRooms(newRooms)
     })
 
@@ -91,10 +104,7 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
   useEffect(() => {
     const userName = localStorage.getItem('username')
 
-    if (userName) {
-      socket.emit(EVENTS.CLIENT.USER_LOGGED, userName)
-      setUserName(userName)
-    }
+    if (userName) setUserName(userName)
 
     setLoading(false)
   }, [userName])

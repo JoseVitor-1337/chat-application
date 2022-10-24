@@ -66,6 +66,7 @@ function Rooms() {
 
           return (
             <HStack
+              data-cy={name}
               p={2}
               justify="space-between"
               cursor="pointer"
@@ -96,12 +97,12 @@ function Rooms() {
               </HStack>
 
               <CloseButton
+                data-cy={`delete_${name}`}
+                onClick={() => handleDeleteRoom(id)}
                 _hover={{
                   bg: useColorModeValue('red.400', 'red.800'),
                   color: 'light',
                 }}
-                zIndex={1000}
-                onClick={() => handleDeleteRoom(id)}
               />
             </HStack>
           )

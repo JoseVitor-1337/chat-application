@@ -39,19 +39,23 @@ function socket({ io }: { io: Server }) {
           }
 
           prismaClient.room.findMany().then((rooms) => {
-            console.log("rooms", rooms);
             socket.emit(EVENTS.SERVER.NEW_ROOM, rooms);
           });
         });
     });
 
     socket.on(EVENTS.CLIENT.SEND_DELETE_ROOM, (roomId: number) => {
-      prismaClient.room.delete({ where: { id: roomId } }).then(() => {
-        prismaClient.room.findMany().then((rooms) => {
-          socket.broadcast.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
-          socket.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
+      prismaClient.room
+        .delete({ where: { id: roomId } })
+        .then(() => {
+          prismaClient.room.findMany().then((rooms) => {
+            socket.broadcast.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
+            socket.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
+          });
+        })
+        .catch((error) => {
+          console.log("error", error);
         });
-      });
     });
 
     socket.on(EVENTS.CLIENT.CREATE_ROOM, ({ roomName }: ICreateRoomType) => {
@@ -76,7 +80,13 @@ function socket({ io }: { io: Server }) {
                 roomId: id,
                 messages,
               });
+            })
+            .catch((error) => {
+              console.log("error", error);
             });
+        })
+        .catch((error) => {
+          console.log("error", error);
         });
     });
 
@@ -101,6 +111,9 @@ function socket({ io }: { io: Server }) {
                   .to(String(roomId))
                   .emit(EVENTS.SERVER.ROOM_MESSAGE, messages);
               });
+          })
+          .catch((error) => {
+            console.log("error", error);
           });
       }
     );

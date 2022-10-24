@@ -53,7 +53,11 @@ function Login() {
 
           <FormControl>
             <FormLabel>Nome do usuário</FormLabel>
-            <Input defaultValue={userName} ref={userNameRef} />
+            <Input
+              data-cy="username"
+              defaultValue={userName}
+              ref={userNameRef}
+            />
           </FormControl>
 
           <Button type="submit">Entrar</Button>
