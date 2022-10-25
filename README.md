@@ -1,6 +1,6 @@
 # Chat Application
 
-### Talk with
+### Chat with your friends on an online platform
 
 <br />
 
@@ -37,7 +37,7 @@
 
 ## Usage
 
-<font size="3">Frontend</font>
+### Frontend
 
 After **_git pull_** , go **_client_** folder and run the commands bellow:
 
@@ -55,7 +55,7 @@ Now you start the client:
 
 Client be running on [http://localhost:3000](http://localhost:3000)
 
-<font size="3">Backend</font>
+### Backend
 
 After **_git pull_** , go **_server_** folder and run the commands bellow:
 
