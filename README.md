@@ -2,9 +2,10 @@
 
 ### Chat with your friends on an online platform
 
-<br />
-
 ![Badge projeto concluido](https://img.shields.io/badge/Status-Projeto%20concluido-blue)
+
+![chat-app-page](https://user-images.githubusercontent.com/59937924/197658611-ad026c1d-f584-48c1-adf0-73e7def7d0cf.png)
+
 
 <br />
 
