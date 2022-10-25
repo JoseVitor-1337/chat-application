@@ -79,6 +79,7 @@ function MessagesContainer() {
               maxWidth="35%"
               borderWidth="1px"
               borderColor="gray.200"
+              bg="light"
               rounded="lg"
               key={message.message}
             >

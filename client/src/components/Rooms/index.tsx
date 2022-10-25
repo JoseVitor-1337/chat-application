@@ -66,6 +66,7 @@ function Rooms() {
 
           return (
             <HStack
+              key={id}
               data-cy={name}
               p={2}
               justify="space-between"

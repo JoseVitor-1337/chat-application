@@ -1,6 +1,6 @@
 # Chat Application
 
-### Talk with
+### Chat with your friends on an online platform
 
 <br />
 
