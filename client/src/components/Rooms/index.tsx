@@ -18,9 +18,9 @@ import { useSockets } from 'contexts/socket.context'
 import EVENTS from 'configs/events'
 
 function Rooms() {
-  const { socket, userName, rooms, roomId, onSetRoomId } = useSockets()
-
   const newRoomRef = useRef<HTMLInputElement | null>(null)
+
+  const { socket, userName, rooms, roomId, onSetRoomId } = useSockets()
 
   function handleCreateRoom() {
     if (!newRoomRef.current) return

@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import {
   Box,
   Button,
@@ -18,18 +18,14 @@ import EVENTS from 'configs/events'
 function MessagesContainer() {
   const { socket, messages, onSetMessages, roomId, userName } = useSockets()
 
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
   const inputMessageRef = useRef<HTMLInputElement | null>(null)
 
   const handleSendMessage = () => {
     const message = inputMessageRef.current?.value
 
     if (!message || !userName) return
-
-    console.log('SEND_ROOM_MESSAGE', {
-      roomId,
-      message,
-      userName,
-    })
 
     socket.emit(EVENTS.CLIENT.SEND_ROOM_MESSAGE, {
       roomId,
@@ -47,6 +43,12 @@ function MessagesContainer() {
     if (inputMessageRef.current) inputMessageRef.current.value = ''
   }
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }
+  }, [containerRef, messages])
+
   if (!roomId) {
     return (
       <Center>
@@ -63,6 +65,7 @@ function MessagesContainer() {
       justify="space-between"
     >
       <Box
+        ref={containerRef}
         bg={useColorModeValue('gray.100', 'gray.800')}
         width="100%"
         p={4}

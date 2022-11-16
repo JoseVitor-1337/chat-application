@@ -17,7 +17,7 @@ const customTheme = {
     colors: {
       primary: {
         default: 'blue.400',
-        _dark: 'blue.900',
+        _dark: 'blue.200',
       },
       borderColor: {
         default: 'gray.200',
@@ -25,10 +25,10 @@ const customTheme = {
       },
       light: {
         default: 'white',
-        _dark: 'black',
+        _dark: 'blackAlpha.600',
       },
       dark: {
-        default: 'black',
+        default: 'blackAlpha.600',
         _dark: 'white',
       },
     },
