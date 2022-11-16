@@ -2,9 +2,9 @@
 
 ### Chat with your friends on an online platform
 
-<br />
-
 ![Badge projeto concluido](https://img.shields.io/badge/Status-Projeto%20concluido-blue)
+
+![chat-app-page](https://user-images.githubusercontent.com/59937924/197658611-ad026c1d-f584-48c1-adf0-73e7def7d0cf.png)
 
 <br />
 
@@ -37,7 +37,7 @@
 
 ## Usage
 
-<font size="3">Frontend</font>
+### Frontend
 
 After **_git pull_** , go **_client_** folder and run the commands bellow:
 
@@ -55,7 +55,7 @@ Now you start the client:
 
 Client be running on [http://localhost:3000](http://localhost:3000)
 
-<font size="3">Backend</font>
+### Backend
 
 After **_git pull_** , go **_server_** folder and run the commands bellow:
 
