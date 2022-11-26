@@ -13,7 +13,7 @@
 ### Frontend
 
 - [Next.js](https://nextjs.org/).
-- [Tailwind CSS](https://tailwindcss.com/)
+- [Chakra UI](https://chakra-ui.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [Cypress](https://www.cypress.io/)
 - [Socket.io](https://socket.io/)
