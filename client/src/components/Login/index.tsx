@@ -16,8 +16,9 @@ import ChatSvg from './assets/messenger.png'
 import { useSockets } from 'contexts/socket.context'
 
 function Login() {
-  const userNameRef = useRef<HTMLInputElement | null>(null)
   const { userName, onSetUserName } = useSockets()
+
+  const userNameRef = useRef<HTMLInputElement | null>(null)
 
   const handleSetUserName = (event: FormEvent) => {
     event.preventDefault()

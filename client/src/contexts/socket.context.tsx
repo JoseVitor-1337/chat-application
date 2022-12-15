@@ -12,7 +12,7 @@ import api from 'configs/api'
 import { SOCKET_URL } from 'configs/socket'
 import EVENTS from 'configs/events'
 
-type IMessage = {
+export type IMessage = {
   userName: string
   message: string
   time: string

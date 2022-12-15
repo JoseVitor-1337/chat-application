@@ -6,7 +6,6 @@ import cors from "cors";
 import config from "config";
 import socket from "./socket";
 import logger from "./utils/logger";
-import { prismaClient } from "./database/prismaClient";
 
 const port = config.get<number>("port");
 const host = config.get<string>("host");
@@ -26,23 +25,6 @@ const io = new Server(httpServer, {
 
 app.get("/", () => {
   logger.info("Server is running");
-});
-
-app.get("/rooms", async (request, response) => {
-  try {
-    const rooms = await prismaClient.room.findMany();
-
-    return response.json({
-      success: true,
-      body: { rooms },
-      message: "Listagem das salas de conversa",
-    });
-  } catch {
-    return response.json({
-      success: false,
-      message: "Erro na listagem das salar",
-    });
-  }
 });
 
 httpServer.listen(port, host, () => {
