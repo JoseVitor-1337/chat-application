@@ -90,6 +90,17 @@ function socket({ io }: { io: Server }) {
         });
     });
 
+    socket.on(EVENTS.CLIENT.REQUEST_ROOMS, () => {
+      prismaClient.room
+        .findMany()
+        .then((rooms) => {
+          socket.emit(EVENTS.SERVER.SEND_ROOMS, rooms);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    });
+
     socket.on(
       EVENTS.CLIENT.SEND_ROOM_MESSAGE,
       ({ roomId, message, userName }: IMessage) => {

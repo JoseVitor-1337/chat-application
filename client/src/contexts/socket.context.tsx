@@ -87,12 +87,20 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
       setRooms(newRooms)
     })
 
+    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms) => {
+      setRooms(newRooms)
+    })
+
     socket.on(EVENTS.SERVER.DELETE_ROOM, (newRooms) => {
       setRooms(newRooms)
     })
 
     socket.on(EVENTS.SERVER.ROOM_MESSAGE, (allMessages: IMessage[]) => {
       setMessages(allMessages)
+    })
+
+    socket.on(EVENTS.SERVER.SEND_ROOMS, (rooms: IRooms[]) => {
+      setRooms(rooms)
     })
 
     socket.on(EVENTS.SERVER.JOINED_ROOMS, ({ roomId, messages }) => {
@@ -105,6 +113,8 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
     const userName = localStorage.getItem('username')
 
     if (userName) setUserName(userName)
+
+    socket.emit(EVENTS.CLIENT.REQUEST_ROOMS)
 
     setLoading(false)
   }, [userName])
