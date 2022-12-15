@@ -6,8 +6,6 @@
 
 ![chat-app-page](https://user-images.githubusercontent.com/59937924/197658611-ad026c1d-f584-48c1-adf0-73e7def7d0cf.png)
 
-<br />
-
 ## Technologies used
 
 ### Frontend
@@ -25,15 +23,11 @@
 - [Typescript](https://www.typescriptlang.org/)
 - [Socket.io](https://socket.io/)
 
-<br />
-
 ## Required installation
 
 > Need have **npm** or **yarn** installed [Install NPM](https://nodejs.org/en/) or [Install YARN](https://yarnpkg.com/)
 
 > Need have **git** installed [Go Here to install](https://git-scm.com/downloads)
-
-<br />
 
 ## Usage
 
