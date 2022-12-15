@@ -25,10 +25,10 @@ const customTheme = {
       },
       light: {
         default: 'white',
-        _dark: 'blackAlpha.600',
+        _dark: 'blackAlpha.900',
       },
       dark: {
-        default: 'blackAlpha.600',
+        default: 'blackAlpha.900',
         _dark: 'white',
       },
     },

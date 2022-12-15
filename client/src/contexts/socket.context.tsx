@@ -7,7 +7,6 @@ import {
 } from 'react'
 import io, { Socket } from 'socket.io-client'
 import { Center, Spinner } from '@chakra-ui/react'
-import api from 'configs/api'
 
 import { SOCKET_URL } from 'configs/socket'
 import EVENTS from 'configs/events'
@@ -70,30 +69,25 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
   }
 
   useEffect(() => {
-    async function loadAsyncFunction() {
-      try {
-        const response = await api.get('/rooms')
+    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms: IRooms[]) => {
+      setRooms(newRooms)
+    })
 
-        setRooms(response.data.body?.rooms)
-      } catch (error) {
-        console.log('error', error)
+    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms: IRooms[]) => {
+      setRooms(newRooms)
+    })
+
+    socket.on(
+      EVENTS.SERVER.DELETE_ROOM,
+      (room: { roomId: number; newRooms: IRooms[] }) => {
+        console.log('room', room)
+        console.log('roomId', roomId)
+
+        if (room.roomId == roomId) setRoomId(0)
+
+        setRooms(room.newRooms)
       }
-    }
-    loadAsyncFunction()
-  }, [])
-
-  useEffect(() => {
-    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms) => {
-      setRooms(newRooms)
-    })
-
-    socket.on(EVENTS.SERVER.NEW_ROOM, (newRooms) => {
-      setRooms(newRooms)
-    })
-
-    socket.on(EVENTS.SERVER.DELETE_ROOM, (newRooms) => {
-      setRooms(newRooms)
-    })
+    )
 
     socket.on(EVENTS.SERVER.ROOM_MESSAGE, (allMessages: IMessage[]) => {
       setMessages(allMessages)
@@ -103,10 +97,13 @@ function SocketsProvider({ children }: ISocketsProviderProps) {
       setRooms(rooms)
     })
 
-    socket.on(EVENTS.SERVER.JOINED_ROOMS, ({ roomId, messages }) => {
-      setRoomId(roomId)
-      setMessages(messages)
-    })
+    socket.on(
+      EVENTS.SERVER.JOINED_ROOMS,
+      ({ roomId, messages }: { roomId: number; messages: IMessage[] }) => {
+        setRoomId(roomId)
+        setMessages(messages)
+      }
+    )
   }, [socket])
 
   useEffect(() => {

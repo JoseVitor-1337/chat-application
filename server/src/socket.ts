@@ -48,9 +48,15 @@ function socket({ io }: { io: Server }) {
       prismaClient.room
         .delete({ where: { id: roomId } })
         .then(() => {
-          prismaClient.room.findMany().then((rooms) => {
-            socket.broadcast.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
-            socket.emit(EVENTS.SERVER.DELETE_ROOM, rooms);
+          prismaClient.room.findMany().then((newRooms) => {
+            socket.broadcast.emit(EVENTS.SERVER.DELETE_ROOM, {
+              newRooms,
+              roomId,
+            });
+            socket.emit(EVENTS.SERVER.DELETE_ROOM, {
+              newRooms,
+              roomId,
+            });
           });
         })
         .catch((error) => {

@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Stack } from '@chakra-ui/react'
+import { Center, Stack, Text } from '@chakra-ui/react'
 
 import { useSockets } from 'contexts/socket.context'
 
@@ -14,9 +14,17 @@ function Rooms() {
       <RoomHeader />
 
       <Stack borderTopWidth="1px" borderColor="borderColor" spacing={0}>
-        {rooms.map(({ id, name }) => {
-          return <RoomItem key={id} id={id} name={name} />
-        })}
+        {rooms.length > 0 ? (
+          <>
+            {rooms.map(({ id, name }) => {
+              return <RoomItem key={id} id={id} name={name} />
+            })}
+          </>
+        ) : (
+          <Center mt={4}>
+            <Text>Não há nenhum grupo</Text>
+          </Center>
+        )}
       </Stack>
     </Stack>
   )

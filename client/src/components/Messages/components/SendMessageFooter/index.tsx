@@ -3,6 +3,7 @@ import { Button, HStack, Input } from '@chakra-ui/react'
 
 import { useSockets } from 'contexts/socket.context'
 import EVENTS from 'configs/events'
+import getCurrentHourFormatted from 'utils/getCurrentHourFormatted'
 
 function MessagesContainer() {
   const { socket, messages, onSetMessages, roomId, userName } = useSockets()
@@ -20,11 +21,9 @@ function MessagesContainer() {
       userName,
     })
 
-    const date = new Date()
-
     onSetMessages([
       ...messages,
-      { userName, message, time: `${date.getHours()}:${date.getMinutes()}` },
+      { userName, message, time: getCurrentHourFormatted() },
     ])
 
     if (inputMessageRef.current) inputMessageRef.current.value = ''
